@@ -82,7 +82,6 @@ const addHeadsToLeaderboard = async(leaderboard) =>
             let buffer = await Buffer.from(response.data.properties[0].value, "base64");
             await axios.get(await JSON.parse(await buffer.toString()).textures.SKIN.url, {responseType: 'arraybuffer'}).then( async(image) =>
             {
-                // fs.createReadStream('../skin.png');
                 let base64ImageString = await Buffer.from(image.data);
                 let head = await getHead(base64ImageString);
                 leaderboard.data[i].skinHead = await resizeHead(head.split(';base64,').pop());
@@ -97,7 +96,6 @@ const getLeaderboard = async(req, res) =>
 {
     await db.getLeaderBoard(req.params.type).then( async(retVal) =>
     {
-        console.log(retVal);
         if(retVal.error)
         {
             res.status(400).send(error);

@@ -29,10 +29,8 @@ class AimTrainerDB
             error: undefined,
             data: undefined
         }
-        console.log(gameType);
         await this.dao.all(`SELECT DISTINCT games.player, games.points, users.uuid FROM (games INNER JOIN users ON games.player = users.username) WHERE games.type=\"${gameType}\" GROUP BY player ORDER BY games.points DESC`).then(async(leaderboard)=>
         {
-            console.log(leaderboard);
             retVal.data = leaderboard
         }, (err) =>
         {
@@ -129,12 +127,12 @@ class AimTrainerDB
             await this.addUser(game.name);
             if(data && data.max !== null)
             {
-                await this.dao.exec(`INSERT INTO games (id, type, points, player) VALUES(\"${data.max + 1}\", \"${game.type}\", \"${game.points}\", \"${game.name}\")`);
+                await this.dao.exec(`INSERT INTO games (id, type, points, player) VALUES(\"${data.max + 1}\", \"${game.type}\", \"${game.points}\", \"${game.name.toLowerCase()}\")`);
                 await this.addGameToUser(data.max + 1, game.name);
                 return;
             } else 
             {
-                await this.dao.exec(`INSERT INTO games (id, type, points, player) VALUES(\"0\", \"${game.type}\", \"${game.points}\", \"${game.name}\")`);
+                await this.dao.exec(`INSERT INTO games (id, type, points, player) VALUES(\"0\", \"${game.type}\", \"${game.points}\", \"${game.name.toLowerCase()}\")`);
                 await this.addGameToUser(0, game.name);
                 return;
             }
