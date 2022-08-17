@@ -45,11 +45,13 @@ class DAO
             console.log(err)
             reject(err)
           } else {
+            console.log(rows);
             resolve(rows)
           }
         })
       })
     }
+
 
     initializeDatabase = async() =>
     {
