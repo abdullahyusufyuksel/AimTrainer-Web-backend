@@ -6,7 +6,7 @@ require('dotenv').config();
 
 server.use(cors());
 server.use(express.json());
-server.use('/api', Router);
+server.use('/', Router);
 
 
 // Start server
