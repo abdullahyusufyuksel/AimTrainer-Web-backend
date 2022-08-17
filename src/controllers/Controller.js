@@ -74,6 +74,7 @@ const insertGame = async(req, res) =>
 }
 const addHeadsToLeaderboard = async(leaderboard) =>
 {
+    
     for(let i = 0; i < leaderboard.data.length; i++)
     {
         await axios.get(`https://sessionserver.mojang.com/session/minecraft/profile/${leaderboard.data[i].uuid}`).then( async(response) =>
@@ -96,6 +97,7 @@ const getLeaderboard = async(req, res) =>
 {
     await db.getLeaderBoard(req.params.type).then( async(retVal) =>
     {
+        console.log(retVal);
         if(retVal.error)
         {
             res.status(400).send(error);
@@ -115,7 +117,6 @@ const getGamesPlayed = async(req, res) =>
             res.status(400).send(error);
             return;
         }
-        console.log("sending data:" + retVal.data);
         res.status(200).send(retVal.data);
     });
 }
