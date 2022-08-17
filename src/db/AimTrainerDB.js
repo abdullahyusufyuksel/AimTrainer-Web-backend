@@ -31,6 +31,7 @@ class AimTrainerDB
         }
         await this.dao.all(`SELECT DISTINCT games.player, games.points, users.uuid FROM (games INNER JOIN users ON games.player = users.username) WHERE games.type=\"${gameType}\" GROUP BY player ORDER BY games.points DESC`).then(async(leaderboard)=>
         {
+            console.log(leaderboard);
             retVal.data = leaderboard
         }, (err) =>
         {
